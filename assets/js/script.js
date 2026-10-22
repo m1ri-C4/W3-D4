@@ -184,7 +184,7 @@ function formSubmit(e) {
     const dot = document.createElement('span');
     dot.classList.add('dot');// assegno la classe dot allo span
     const selectedCell = document.querySelector('.selected'); //seleziono la casella del giorno attualmente selezionato 
-    if (!selectedCell.querySelector('dot')) { //se nella casella non è presente un elemento dot
+    if (!selectedCell.querySelector('.dot')) { //se nella casella non è presente un elemento dot
         selectedCell.appendChild(dot); //aggiungi il pallino alla casella del giorno 
     }
 }
