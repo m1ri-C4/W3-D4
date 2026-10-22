@@ -53,9 +53,15 @@ const createDays = (daysNumber) => {
     for (let i = 0; i < daysNumber; i++) {
         const dayCellDiv = document.createElement('div');
         dayCellDiv.classList.add('day');
-        // le celle dovranno essere cliccabili
         dayCellDiv.addEventListener('click', function () {
-            // scrivere la fuznione del click
+            unselectAllDays(); // per deselezionare il giorno eventualmente selezionato prima
+            dayCellDiv.classList.add('selected');
+            changeMeetingDaySection(i);
+            if (appointments[i].length > 0) {
+                showAppointments(i);
+            } else {
+                document.querySelector('#appointments').style.display = 'none';
+            }
         });
         // numero del giorno
         const cellValue = document.createElement('h3');
@@ -74,5 +80,32 @@ const createDays = (daysNumber) => {
         cellValue.innerText = `${dayName} ${i + 1}`;
         dayCellDiv.appendChild(cellValue);
         calendarDiv.appendChild(dayCellDiv);
+        // Ci serve un array per ogni giorno, da pushare nell'array generale
+        appointments.push([]);
     }
 };
+
+const unselectAllDays = () => {
+    const previousSelected = document.querySelector('.selected');
+    if (previousSelected) {
+        previousSelected.classList.remove('selected');
+    }
+};
+
+const changeMeetingDaySection = (dayNumber) => {
+    const newMeetingDay = document.querySelector('#newMeetingDay');
+    newMeetingDay.innerText = dayNumber + 1;
+    newMeetingDay.classList.add('hasDay');
+};
+
+const showAppointments = (dayNumber) => {
+    const dayAppointments = appointments[dayNumber];
+    const appointmentsList = document.querySelector('#appointments ul');
+    appointmentsList.textContent = '';
+    dayAppointments.forEach((appointment) => {
+        const newLi = document.createElement('li');
+        newLi.innerText = appointment;
+        appointmentsList.appendChild(newLi);
+    });
+    document.querySelector('#appointments').style.display = 'block';
+}
