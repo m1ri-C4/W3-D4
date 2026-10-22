@@ -107,48 +107,51 @@ const createDays = (daysNumber) => {
     }
 };
 
-
+//funzione per rimuovere la selezione precedente 
 const unselectAllDays = () => {
-    const previousSelected = document.querySelector('.selected');
+    const previousSelected = document.querySelector('.selected');//cerco l'elemento che ha la classe selected
     if (previousSelected) {
-        previousSelected.classList.remove('selected');
+        previousSelected.classList.remove('selected'); // se esiste rimuovo la classe selected
     }
 };
 
+//la funzione riceve l'indice del giorno selezionato 
 const changeMeetingDaySection = (dayNumber) => {
-    const newMeetingDay = document.querySelector('#newMeetingDay');
-    newMeetingDay.innerText = dayNumber + 1;
-    newMeetingDay.classList.add('hasDay');
+    const newMeetingDay = document.querySelector('#newMeetingDay'); //seleziona lo span che contiene inizialmente 'clicca su un giorno'
+    newMeetingDay.innerText = dayNumber + 1; //sostituisco il testo con il numero delò giorno +1 perchè l'indice parte da 0
+    newMeetingDay.classList.add('hasDay');// aggiungola classe CSS per modificare l'aspetto del numero selezionato
 };
 
+//funzione che mostra gli impegni del giorno selezionato
 const showAppointments = (dayNumber) => {
-    const dayAppointments = appointments[dayNumber];
-    const appointmentsList = document.querySelector('#appointments ul');
-    appointmentsList.textContent = '';
-    dayAppointments.forEach((appointment) => {
-        const newLi = document.createElement('li');
-        newLi.innerText = appointment;
-        appointmentsList.appendChild(newLi);
+    const dayAppointments = appointments[dayNumber]; //recupero l'array degli impegni di quel giorno
+    const appointmentsList = document.querySelector('#appointments ul'); //seleziono l'ul dentro il div appointments
+    appointmentsList.textContent = ''; //svuoto il contenuto precedente della lista affinchè non mostri gli impegni degli altri giorni 
+    dayAppointments.forEach((appointment) => { //scorro tutti gli impegni del giorno con un forEach
+        const newLi = document.createElement('li'); // creo un nuovo elemento li 
+        newLi.innerText = appointment; //inserisco il testo dell'impegno dentro il li 
+        appointmentsList.appendChild(newLi); //aggiungo il li al ul
     });
-    document.querySelector('#appointments').style.display = 'block';
+    document.querySelector('#appointments').style.display = 'block'; //rendo visibile la sezione degli impegni
 };
 
-// Inserimento impegni
+// seleziono gli elementi per l'inserimento impegni
 const meetingForm = document.querySelector('form');
 const timeSelect = document.querySelector('#newMeetingTime');
 const inputName = document.querySelector('#newMeetingName');
 const submitBtn = document.querySelector('form button');
 
-// Verifica form
+// aggiungo l'evento blur all'input orario che verrà eseguito quando esco dal campo 
 timeSelect.addEventListener('blur', function (e) {
-    if (timeSelect.value === '' || inputName.value === '') {
-        return;
+    if (timeSelect.value === '' || inputName.value === '') { // controllo se l'orario oppure il nome sono vuoti
+        return; // se manca il valore interrompo la funzione
     } else {
-        submitBtn.removeAttribute('disabled');
-        submitBtn.classList.remove('disabled');
+        submitBtn.removeAttribute('disabled'); // rimuovo l'attributo disabled dal pulsante per permettere all'utente di cliccarlo 
+        submitBtn.classList.remove('disabled'); // rimuovo anche la classe CSS disabled
     }
 });
 
+//aggiungo l'evento blur anche all'input del nome (fa le stesse cose della funzione dell'orario)
 inputName.addEventListener('blur', function (e) {
     if (timeSelect.value === '' || inputName.value === '') {
         return;
@@ -158,29 +161,30 @@ inputName.addEventListener('blur', function (e) {
     }
 });
 
-meetingForm.addEventListener('submit', formSubmit);
+meetingForm.addEventListener('submit', formSubmit); //aggiungo l'evento submit al form, quando invio il form viene chiamata la funzione forSubmit
 
+//creo la funzione che gestisce il salvataggio 
 function formSubmit(e) {
-    e.preventDefault();
-    const selectedDay = document.querySelector('#newMeetingDay').textContent;
-    if (selectedDay === 'Clicca su un giorno') {
-        alert("Selezionare un giorno prima di inserire l'evento");
-        meetingForm.reset();
-        return;
+    e.preventDefault(); //impedisco il comportamento predefinito del form, evbitando il caricamento della pagina 
+    const selectedDay = document.querySelector('#newMeetingDay').textContent; // recuper il testo dello span che mostra il testo il giorno selezionato 
+    if (selectedDay === 'Clicca su un giorno') { // se il giorno non è stato selezionato 
+        alert("Selezionare un giorno prima di inserire l'evento"); // stampo l'alert
+        meetingForm.reset(); //svuoto i campi del form
+        return;//interrompo la fuzione senza salvare l'impegno
     }
-    const meetingTime = document.querySelector('#newMeetingTime').value;
-    const meetingName = document.querySelector('#newMeetingName').value;
-    const meetingString = `${meetingTime} - ${meetingName}`;
-    const dayIndex = Number(selectedDay) - 1;
-    appointments[dayIndex].push(meetingString);
-    meetingForm.reset();
-    showAppointments(dayIndex);
+    const meetingTime = document.querySelector('#newMeetingTime').value; //recupero il valore dell'input dell'orario
+    const meetingName = document.querySelector('#newMeetingName').value; //recupero il valore dell'input del nome
+    const meetingString = `${meetingTime} - ${meetingName}`; //crea una stringa usando orario e nome 
+    const dayIndex = Number(selectedDay) - 1; //converto il giorno selezionato in numero e sottraggo 1 per ottenere l'indice dell'array
+    appointments[dayIndex].push(meetingString);//aggiungo l'impegno nell'array del giorno corretto 
+    meetingForm.reset();//svuoto i campi del form dopo il salvataggio
+    showAppointments(dayIndex); //aggiorno la lista degli impegni del giorno
 
-    // Pallino nei giorni con impegni
+    // creo un elemento span per il pallino nei giorni con impegni
     const dot = document.createElement('span');
-    dot.classList.add('dot');
-    const selectedCell = document.querySelector('.selected');
-    if (!selectedCell.querySelector('dot')) {
-        selectedCell.appendChild(dot);
+    dot.classList.add('dot');// assegno la classe dot allo span
+    const selectedCell = document.querySelector('.selected'); //seleziono la casella del giorno attualmente selezionato 
+    if (!selectedCell.querySelector('dot')) { //se nella casella non è presente un elemento dot
+        selectedCell.appendChild(dot); //aggiungi il pallino alla casella del giorno 
     }
 }
