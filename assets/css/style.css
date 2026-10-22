@@ -12,3 +12,97 @@ body {
 	background-color: #131334;
 	color: #ebebeb;
 }
+
+.container {
+    max-width: 992px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 4em;
+    font-weight: 900;
+}
+
+/* Inserimento impegni */
+h2 {
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+}
+
+h4 {
+    margin-bottom: 1.2rem;
+}
+
+#addMeeting {
+    margin-bottom: 1.2rem;
+}
+
+#addMeeting div {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-right: 3em;
+}
+
+form {
+    display: inline;
+}
+
+input {
+    width: 130px;
+    min-height: 36px;
+    background-color: #0c0b1d;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    color: white;
+}
+
+input:focus {
+    background-color: #2d2a59;
+}
+
+input:focus::placeholder {
+    color: #615d9c;
+}
+
+#newMeetingDay {
+    display: inline-block;
+    min-height: 40px;
+}
+
+#newMeetingDay.hasDay {
+    font-size: 28px;
+    font-weight: 700;
+    background-color: #0c0b1d;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+#newMeetingName {
+    width: 200px;
+}
+
+#newMeetingTime::-webkit-calendar-picker-indicator {
+    background-color: #7a408a;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+form button {
+    cursor: pointer;
+    background-color: #7a408a;
+    color: #efd7f5;
+    border: none;
+    border-radius: 5px;
+    width: 130px;
+    min-height: 36px;
+    font-weight: 700;
+    padding: 10px;
+}
+
+/* #appointments {
+    display: none;
+    margin-bottom: 30px;
+} */
