@@ -1,16 +1,16 @@
-*,
+*
 *::before,
 *::after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html,
 body {
-	font-family: 'Outfit', sans-serif;
-	background-color: #131334;
-	color: #ebebeb;
+    font-family: 'Outfit', sans-serif;
+    background-color: #131334;
+    color: #ebebeb;
 }
 
 .container {
@@ -21,6 +21,57 @@ body {
 h1 {
     font-size: 4em;
     font-weight: 900;
+}
+
+/* Griglia */
+.day {
+    display: inline-block;
+    width: 14%;
+    /* 100 / 7 fa poco più di 14, per cui i div saranno 7 per riga, l'ottavo andrà daccapo */
+    height: 130px;
+    position: relative;
+    /* per poi mettere il numero del giorno in position absolute, posizionato al centro */
+    border: 1px solid aqua;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.day:hover,
+.day:hover h3 {
+    background-color: #15132e;
+}
+
+.day h3 {
+    text-align: center;
+    font-size: 20px;
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+    background-color: #15132e;
+}
+
+.day.selected {
+    border-color: #7a408a;
+}
+
+.dot {
+    position: absolute;
+    left: 45%;
+    bottom: 20px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #7a408a;
+}
+
+.currentDay {
+    background-color: pink;
+}
+
+.sunday {
+    color: red;
 }
 
 /* Inserimento impegni */
@@ -102,7 +153,7 @@ form button {
     padding: 10px;
 }
 
-/* #appointments {
+#appointments {
     display: none;
     margin-bottom: 30px;
-} */
+}
